@@ -66,3 +66,8 @@ require("vite-server").setup({
   },
 })
 ```
+
+## 使用
+
+- 启动服务: `ViteServerStart` or `:lua require('vite-server').start()`
+- 停止服务: `ViteServerStop` or `:lua require('vite-server').stop()`

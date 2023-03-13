@@ -66,3 +66,8 @@ require("vite-server").setup({
   },
 })
 ```
+
+## useage
+
+- start vite server: `ViteServerStart` or `:lua require('vite-server').start()`
+- stop vite server: `ViteServerStop` or `:lua require('vite-server').stop()`
