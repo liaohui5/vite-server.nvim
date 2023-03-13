@@ -24,7 +24,7 @@ use({ "liaohui5/vite-server.nvim" })
 
 ```lua
 require("vite-server").setup({
-  -- show vite documention: https://vitejs.dev/guide/cli.html
+  -- read vite documention: https://vitejs.dev/guide/cli.html
   -- only supported: port,open,force,cors,base
   vite_cli_opts = {
     port = 8888,
