@@ -80,15 +80,20 @@ M.gen_url = function(config)
 end
 
 -- generate command
-M.gen_command = function(config)
+M.gen_command = function(config, path)
   local cmd = "vite "
   local fmt = string.format
 
   -- root path
-  if type(config.root_path) == "function" then
-    cmd = cmd .. config.root_path()
+  if type(path) == "string" then
+    cmd = cmd .. path
   else
-    cmd = cmd .. fn.expand("%:p:h")
+    -- not provide path use config root_dir function
+    if type(config.root_path) == "function" then
+      cmd = cmd .. config.root_path()
+    else
+      cmd = cmd .. fn.expand("%:p:h")
+    end
   end
 
   -- port / base
@@ -115,7 +120,7 @@ M.gen_command = function(config)
 end
 
 -- start
-M.start = function()
+M.start = function(path)
   if not command_exists() then
     echo("please install vite first!")
     return
@@ -128,7 +133,7 @@ M.start = function()
 
   -- generate commmand string && jobstart options
   local config, vite_cli_opts, hooks = M.config, M.config.vite_cli_opts, M.config.hooks
-  local cmd = M.gen_command(config.vite_cli_opts)
+  local cmd = M.gen_command(vite_cli_opts, path)
   local opts = {
     detach = config.deatch_process_on_exit,
   }
