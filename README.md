@@ -4,6 +4,10 @@ English | [中文](https://github.com/liaohui5/vite-server.nvim/blob/main/README
 
 start a [vite](https://vitejs.dev/) server, like VSCode [LiveServer Plugin](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
 
+## preview
+
+https://user-images.githubusercontent.com/29266093/224760191-f66b0538-3133-4d2e-8f19-ac87cd30f44e.mp4
+
 ## dependencies
 
 - [vite](https://vitejs.dev/)

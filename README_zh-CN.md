@@ -4,6 +4,10 @@
 
 启动一个 [vite](https://vitejs.dev/) 服务, 就像 VSCode [LiveServer](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) 插件的效果
 
+## 预览
+
+https://user-images.githubusercontent.com/29266093/224760191-f66b0538-3133-4d2e-8f19-ac87cd30f44e.mp4
+
 ## 依赖
 
 - [vite](https://vitejs.dev/)
