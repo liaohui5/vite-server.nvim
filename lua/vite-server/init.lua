@@ -1,6 +1,5 @@
 local M = {}
 local api, fn = vim.api, vim.fn
-local is_started = false
 local job_id = nil
 local started_on_url = ""
 
@@ -28,13 +27,16 @@ end
 -- set status
 local function set_status(status)
   if status then
-    is_started = true
+    M.is_started = true
     started_on_url = M.gen_url(M.config.vite_cli_opts)
   else
-    is_started = false
+    M.is_started = false
     started_on_url = ""
   end
 end
+
+-- status
+M.is_started = false
 
 -- vite command config
 M.config = {
@@ -126,7 +128,7 @@ M.start = function(path)
     return
   end
 
-  if is_started then
+  if M.is_started then
     echo("server is running on: " .. started_on_url)
     return
   end
@@ -163,7 +165,7 @@ end
 
 -- stop server
 M.stop = function()
-  if not is_started then
+  if not M.is_started then
     echo("server is not started")
     return
   end
