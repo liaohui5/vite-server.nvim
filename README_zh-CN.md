@@ -42,7 +42,7 @@ require("vite-server").setup({
     -- return table.remove(vim.fn.split(vim.fn.getcwd(), "/"))
 
     -- 当前执行目录的buffer所在的目录(默认值)
-    return fn.expand("%:p:h")
+    return vim.fn.expand("%:p:h")
   end,
   hooks = {
     -- 启动后执行
@@ -52,14 +52,14 @@ require("vite-server").setup({
     on_stdout = nil,
     on_exit = function(_, exit_code)
       if exit_code == 0 then
-        echo("server stoped")
+        print("server stoped")
         return
       end
     end,
 
     on_stderr = function(_, data)
       if not data or data[1] == "" then
-        echo("server start failed")
+        print("server start failed")
         return
       end
     end,

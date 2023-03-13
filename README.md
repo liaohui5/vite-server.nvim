@@ -42,7 +42,7 @@ require("vite-server").setup({
     -- return table.remove(vim.fn.split(vim.fn.getcwd(), "/"))
 
     -- current file directory (default)
-    return fn.expand("%:p:h")
+    return vim.fn.expand("%:p:h")
   end,
   hooks = {
     -- after server started
@@ -52,14 +52,14 @@ require("vite-server").setup({
     on_stdout = nil,
     on_exit = function(_, exit_code)
       if exit_code == 0 then
-        echo("server stoped")
+        print("server stoped")
         return
       end
     end,
 
     on_stderr = function(_, data)
       if not data or data[1] == "" then
-        echo("server start failed")
+        print("server start failed")
         return
       end
     end,
@@ -67,7 +67,7 @@ require("vite-server").setup({
 })
 ```
 
-## useage
+## use
 
 - start vite server: `ViteServerStart` or `:lua require('vite-server').start()`
 - stop vite server: `ViteServerStop` or `:lua require('vite-server').stop()`
