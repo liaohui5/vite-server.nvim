@@ -6,7 +6,7 @@ start a [vite](https://vitejs.dev/) server, like VSCode [LiveServer Plugin](http
 
 ## preview
 
-https://user-images.githubusercontent.com/29266093/224760191-f66b0538-3133-4d2e-8f19-ac87cd30f44e.mp4
+https://user-images.githubusercontent.com/29266093/224965117-32174c6e-bb0d-4cef-aa3a-428d9972d0d2.mp4
 
 ## dependencies
 
