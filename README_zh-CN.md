@@ -75,3 +75,38 @@ require("vite-server").setup({
 
 - 启动服务: `ViteServerStart` or `:lua require('vite-server').start()`
 - 停止服务: `ViteServerStop` or `:lua require('vite-server').stop()`
+
+## 在状态栏中显示状态
+
+- [lualine](https://github.com/nvim-lualine/lualine.nvim)
+
+```lua
+-- vite-server.nvim status
+local function vite_server_status()
+  local ok, vs = pcall(require, "vite-server")
+  local str = ""
+  if ok then
+    str = ""
+  end
+
+  if vs.is_started then
+    str = str .. " " .. vs.gen_url(vs.config.vite_cli_opts)
+  end
+
+  return str
+end
+
+-- lualine setup sections
+require('lualine').setup({
+-- ...
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = { vite_server_status , 'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+-- ...
+})
+```
