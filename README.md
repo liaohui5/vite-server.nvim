@@ -31,6 +31,9 @@ require("vite-server").setup({
   -- read vite documention: https://vitejs.dev/guide/cli.html
   -- only supported: port,open,force,cors,base
   vite_cli_opts = {
+    -- Note: The --strictPort parameter is added, https://v3.vitejs.dev/config/server-options.html#server-strictport
+    --       If the x parameter is not added, the obtained url will be inaccurate.
+    --       so please ensure that the port is not useing
     port = 8888,
     open = true,
     force = true,
@@ -38,12 +41,12 @@ require("vite-server").setup({
     base = "/",
   },
   show_cmd = true, -- show execute command in message
-  deatch_process_on_exit = true, -- deatch process on exit nvim
+  deatch_process_on_exit = false, -- see `:h jobstart-options` deatch option
   root_path = function()
     -- run vite command root directory, like ~/Desktop/codes
 
     -- project root directory
-    -- return table.remove(vim.fn.split(vim.fn.getcwd(), "/"))
+    -- return vim.fn.getcwd()
 
     -- current file directory (default)
     return vim.fn.expand("%:p:h")
@@ -57,15 +60,11 @@ require("vite-server").setup({
     on_exit = function(_, exit_code)
       if exit_code == 0 then
         print("server stoped")
-        return
       end
     end,
 
     on_stderr = function(_, data)
-      if not data or data[1] == "" then
-        print("server start failed")
-        return
-      end
+      print("an error has occurred")
     end,
   },
 })
@@ -109,4 +108,30 @@ require('lualine').setup({
   },
 -- ...
 })
+```
+
+## Q & A
+
+- Q: How to display the output of vite to the nvim command line message
+
+```lua
+--- ...
+  on_stdout = function(_, data)
+    -- all output
+    print(table.concat(data))
+  end,
+  on_stderr = function(_, data)
+    -- error output
+    print(table.concat(data))
+  end
+-- ...
+```
+
+- Q: After using the `:ViteServerStart` command, display `an error has occurred`
+- A: Try another port, it may be that the port is occupied.
+
+```lua
+-- If the problem persists after changing the port, the following steps can be tried:
+-- 1. Set show_cmd = true,
+-- 2. Manually copy the command and execute it in the command line to see if the error can be resolved.
 ```

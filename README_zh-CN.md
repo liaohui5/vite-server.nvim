@@ -31,6 +31,9 @@ require("vite-server").setup({
   -- 查看 vite 文档: https://vitejs.dev/guide/cli.html
   -- 目前只支持: port,open,force,cors,base
   vite_cli_opts = {
+    -- Note: 默认是加了 --strictPort 参数的,
+    --       如果不加这个参数, 会导致 url 获取不准确
+    --       所以,请确保 port 是没有被使用的
     port = 8888,
     open = true,
     force = true,
@@ -38,18 +41,18 @@ require("vite-server").setup({
     base = "/",
   },
   show_cmd = true, -- 查看执行的命令如: vite . --port=888 xxxx
-  deatch_process_on_exit = true, -- 退出编辑器时,停止 vite 服务
+  deatch_process_on_exit = false, -- 查看 `:h jobstart-options` detach
   root_path = function()
     -- vite 运行的目录, like ~/Desktop/codes
 
     -- 如果想要在项目根目录运行
-    -- return table.remove(vim.fn.split(vim.fn.getcwd(), "/"))
+    -- return return vim.fn.getcwd()
 
     -- 当前执行目录的buffer所在的目录(默认值)
     return vim.fn.expand("%:p:h")
   end,
   hooks = {
-    -- 启动后执行
+    -- after server started
     on_started = nil, --- or function(job_id, config) end,
 
     -- :h jobstart-options
@@ -57,15 +60,11 @@ require("vite-server").setup({
     on_exit = function(_, exit_code)
       if exit_code == 0 then
         print("server stoped")
-        return
       end
     end,
 
     on_stderr = function(_, data)
-      if not data or data[1] == "" then
-        print("server start failed")
-        return
-      end
+      print("an error has occurred")
     end,
   },
 })
@@ -109,4 +108,30 @@ require('lualine').setup({
   },
 -- ...
 })
+```
+
+## 常见问题
+
+- Q: 如何将 vite 的命令行输出, 显示到 nvim 的命令行中
+
+```lua
+--- ...
+  on_stdout = function(_, data)
+    -- all output
+    print(table.concat(data))
+  end,
+  on_stderr = function(_, data)
+    -- error output
+    print(table.concat(data))
+  end
+-- ...
+```
+
+- Q: 使用 `:ViteServerStart` 显示 `an error has occurred`
+- A: 换另外一个端口试一下, 可能是端口被占用了
+
+```lua
+-- 如果换端口之后, 依然没有解决, 可以尝试以下操作
+-- 1. 设置 show_cmd = true,
+-- 2. 手动复制命令到命令行执行一下, 看报错解决
 ```

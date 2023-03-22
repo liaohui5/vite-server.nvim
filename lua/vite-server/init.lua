@@ -50,28 +50,25 @@ M.config = {
     base = "/",
   },
   show_cmd = true, -- show execute command in message
-  deatch_process_on_exit = true, -- deatch process on exit nvim
+  deatch_process_on_exit = false, -- deatch process on exit nvim
   root_path = function()
     -- run vite command root directory, like [~/Desktop/codes]
     return fn.expand("%:p:h")
   end,
   hooks = {
+    -- after server started
     on_started = nil, --- or function(job_id, config) end,
-    on_stdout = nil,
 
     -- :h jobstart-options
+    on_stdout = nil,
     on_exit = function(_, exit_code)
       if exit_code == 0 then
         echo("server stoped")
-        return
       end
     end,
 
     on_stderr = function(_, data)
-      if not data or data[1] == "" then
-        echo("server start failed")
-        return
-      end
+      echo("an error has occurred")
     end,
   },
 }
@@ -84,7 +81,6 @@ end
 -- generate command
 M.gen_command = function(config, path)
   local cmd = "vite "
-  local fmt = string.format
 
   -- root path
   if type(path) == "string" then
@@ -112,6 +108,7 @@ M.gen_command = function(config, path)
     open = config.open,
     force = config.force,
     cors = config.cors,
+    strictPort = true,
   }
   for key, value in pairs(flags) do
     if value then
