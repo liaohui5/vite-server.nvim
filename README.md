@@ -29,15 +29,16 @@ use({ "liaohui5/vite-server.nvim" })
 ```lua
 require("vite-server").setup({
   -- read vite documention: https://vitejs.dev/guide/cli.html
-  -- only supported: port,open,force,cors,base
+  -- only supported: port,open,force,cors,base,strictPort
   vite_cli_opts = {
     -- Note: The --strictPort parameter is added, https://v3.vitejs.dev/config/server-options.html#server-strictport
-    --       If the x parameter is not added, the obtained url will be inaccurate.
+    --       If the strictPort parameter is not added, the obtained url will be inaccurate.
     --       so please ensure that the port is not useing
     port = 8888,
     open = true,
     force = true,
     cors = false,
+    strictPort = true,
     base = "/",
   },
   show_cmd = true, -- show execute command in message

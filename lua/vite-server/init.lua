@@ -41,11 +41,12 @@ M.is_started = false
 -- vite command config
 M.config = {
   -- show vite documention: https://vitejs.dev/guide/cli.html
-  -- only supported port,open,force,cors,base
+  -- only supported port,open,force,cors,base,strictPort
   vite_cli_opts = {
     port = 8888,
     open = true,
     force = true,
+    strictPort = true,
     cors = false,
     base = "/",
   },
@@ -108,7 +109,7 @@ M.gen_command = function(config, path)
     open = config.open,
     force = config.force,
     cors = config.cors,
-    strictPort = true,
+    strictPort = config.strictPort,
   }
   for key, value in pairs(flags) do
     if value then

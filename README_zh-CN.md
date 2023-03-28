@@ -29,7 +29,7 @@ use({ "liaohui5/vite-server.nvim" })
 ```lua
 require("vite-server").setup({
   -- 查看 vite 文档: https://vitejs.dev/guide/cli.html
-  -- 目前只支持: port,open,force,cors,base
+  -- 目前只支持: port,open,force,cors,base,strictPort
   vite_cli_opts = {
     -- Note: 默认是加了 --strictPort 参数的,
     --       如果不加这个参数, 会导致 url 获取不准确
@@ -38,6 +38,7 @@ require("vite-server").setup({
     open = true,
     force = true,
     cors = false,
+    strictPort = true,
     base = "/",
   },
   show_cmd = true, -- 查看执行的命令如: vite . --port=888 xxxx
@@ -80,6 +81,7 @@ require("vite-server").setup({
 - [lualine](https://github.com/nvim-lualine/lualine.nvim)
 
 ```lua
+-- 注意: 如果 strictPort = false 那么获取的 url 不准确
 -- vite-server.nvim status
 local function vite_server_status()
   local ok, vs = pcall(require, "vite-server")
